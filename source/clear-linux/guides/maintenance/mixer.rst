@@ -13,7 +13,7 @@ Prerequisites
 *************
 
 To start working with the mixer tools, you need a recent image of |CL| with
-the `mixer` bundle installed. If the bundle is not yet installed, you can
+the ``mixer`` bundle installed. If the bundle is not yet installed, you can
 add it with the :command:`swupd bundle-add` command as follows:
 
    .. code-block:: bash
@@ -138,11 +138,11 @@ to specify an alternate path to the file as needed.
 
 The :file:`builder.conf` file has different sections, for example:
 
-* The `[Builder]` section provides the mixer tools with the required
+* The ``[Builder]`` section provides the mixer tools with the required
   configuration options. This section defines the path where the generated
   bundles and update metadata are published.
 
-* The `[swupd]` section contains specific update parameters. The
+* The ``[swupd]`` section contains specific update parameters. The
   :abbr:`swupd-server (software update server)` creates an update using
   said specific update parameters.
 
@@ -180,30 +180,30 @@ following example:
 
 The following variables require further explanation:
 
-* The `LOCAL_BUNDLE_DIR` variable sets the path where mixer stores the local
+* The ``LOCAL_BUNDLE_DIR`` variable sets the path where mixer stores the local
   bundle definition files. These bundle definition files include any new,
   original bundles you create, along with any edited versions of upstream
   |CL| bundles.
 
-* The `SERVER_STATE_DIR` variable sets the path for the output of the mix
+* The ``SERVER_STATE_DIR`` variable sets the path for the output of the mix
   content. Mixer automatically creates the path for you, but the path can be
   set to any location. In this example, we use the workspace directory.
 
-* The `BUNDLE_DIR` variable sets the path where mixer temporarily stores the
+* The ``BUNDLE_DIR`` variable sets the path where mixer temporarily stores the
   bundle definition files while building chroots. Only the legacy
   chroot-builder uses this path. By default, mixer does not generate this
   directory until the directory is needed. In our example, the path is set to
   :file:`/home/clr/mix/mix-bundles`. The new chroot-builder does not generate
   the folder at all.
 
-* The `YUM_CONF` variable sets the path where mixer automatically generates
+* The ``YUM_CONF`` variable sets the path where mixer automatically generates
   the :file:`.yum-mix.conf` yum configuration file. The yum configuration file
   points the chroot-builder to the path where the RPMs are stored.
 
-* The `CERT` variable sets the path where mixer stores the
+* The ``CERT`` variable sets the path where mixer stores the
   :file:`Swupd_Root.pem` certificate file. The chroot-builder needs the
   certificate file to sign the root :file:`Manifest.MoM` file to provide
-  security for content verification. The value of the `CERT` variable can
+  security for content verification. The value of the ``CERT`` variable can
   point to a different certificate. The chroot-builder inserts the
   certificate specified in this value into the
   :file:`/os-core-update/usr/share/clear/update-ca/` path. The software update
@@ -215,26 +215,26 @@ The following variables require further explanation:
   provide the path to an existing one, and signs the :file:`Manifest.MoM`
   file to provide security for the updated content you create.
 
-* The `CONTENTURL` and `VERSIONURL` variables set the domain or IP address
+* The ``CONTENTURL`` and ``VERSIONURL`` variables set the domain or IP address
   where swupd looks for your update content and the corresponding version. You
-  must set these variables to the domain or IP-address of the server hosting the
+  must set these variables to the domain or IP address of the server hosting the
   update content. You can use any web server to host your update content. To learn
   how to install and configure web server using |CL|, visit
   :ref:`web-server-install`. For our example, the web update content within
-  the `SERVER_STATE_DIR` directory is located here:
+  the ``SERVER_STATE_DIR`` directory is located here:
   :file:`/home/clr/mix/update/www`. If the web server is on the same machine as
   this directory, you can create a symlink to the directory in your web
   server's document root to easily host the content. These URLs are
-  embedded in images created for your mix. The `swupd-client` looks at
+  embedded in images created for your mix. The ``swupd-client`` looks at
   these URLs to determine if a new version is available and the location
   from where to download the updated content. These links are equivalent
   to the |CL| `update page`_ but for the mix.
 
-* The `FORMAT` variable relates to format bumps. To learn more about the
-  `FORMAT` option, refer to :ref:`mixer-format` and the `format bumps wiki`_.
-  For now, leave the `FORMAT` value unchanged.
+* The ``FORMAT`` variable relates to format bumps. To learn more about the
+  ``FORMAT`` option, refer to :ref:`mixer-format` and the `format bumps wiki`_.
+  For now, leave the ``FORMAT`` value unchanged.
 
-* The `VERSIONS_PATH` variable sets the path for the mix version and upstream
+* The ``VERSIONS_PATH`` variable sets the path for the mix version and upstream
   |CL| version's two state files: :file:`mixversion` and
   :file:`upstreamversion`. Mixer creates both files for you when you set up
   the workspace.
@@ -245,7 +245,7 @@ The following variables require further explanation:
 Create or locate RPMs for the mix
 *********************************
 
-If you create RPMs from scratch, you can use `autospec`, `mock`, `rpmbuild`,
+If you create RPMs from scratch, you can use ``autospec``, ``mock``, ``rpmbuild``,
 or similar tools to build them. If the RPMs are not built on |CL|, ensure
 your configuration and toolchain builds them correctly for |CL|, or else
 there is no guarantee they will be compatible. For more information on
@@ -295,7 +295,7 @@ List, edit, create, add, remove, or validate bundles
 
 The bundles in the mix are specified in the mix bundle list. Mixer stores
 this list as a flat file called :file:`mixbundles` in the path set by the
-`VERSIONS_PATH` variable of the :file:`builder.conf` file. Mixer
+``VERSIONS_PATH`` variable of the :file:`builder.conf` file. Mixer
 automatically generates the :file:`mixbundles` list file during
 initialization. Mixer reads and writes the bundle list file when you change
 the bundles of the mix.
@@ -347,7 +347,7 @@ Local bundles are bundles that you create, or are edited versions of upstream
 bundles.
 
 Local bundle definition files live in the :file:`local-bundles` directory.
-The `LOCAL_BUNDLE_DIR` variable sets the path of this directory in your
+The ``LOCAL_BUNDLE_DIR`` variable sets the path of this directory in your
 :file:`builder.conf` configuration file. For this example, the path is
 :file:`/home/clr/mix/local-bundles`. You can see the available local bundles
 with the following command:
@@ -371,15 +371,15 @@ precedence over any upstream bundles that have the same name.
 This precedence enables you to edit upstream bundles. The local, edited
 version of the bundle overrides the bundle version found upstream.
 
-For example, to edit the `bundle1` definition file, we use the following
+For example, to edit the ``bundle1`` definition file, we use the following
 command:
 
 .. code-block:: bash
 
    mixer bundle edit bundle1
 
-If `bundle1` is found in your local bundles, mixer edits this bundle
-definition file. If instead `bundle1` is only found upstream, mixer copies
+If ``bundle1`` is found in your local bundles, mixer edits this bundle
+definition file. If instead ``bundle1`` is only found upstream, mixer copies
 the bundle definition file from upstream into your :file:`local-bundles`
 directory first.
 
@@ -425,7 +425,7 @@ as part of the bundle.
 Add bundles to the mix
 ======================
 
-Add `bundle1` to your mix with the following command:
+Add ``bundle1`` to your mix with the following command:
 
 .. code-block:: bash
 
@@ -448,13 +448,13 @@ To add multiple bundles at once, use the following command:
 Remove bundles from the mix
 ===========================
 
-Remove `bundle1` from your mix with the following command:
+Remove ``bundle1`` from your mix with the following command:
 
 .. code-block:: bash
 
    mixer bundle remove bundle1
 
-This command removes `bundle1` from the mix bundle list stored in your
+This command removes ``bundle1`` from the mix bundle list stored in your
 :file:`mixbundles` file. By default, this command does not remove the bundle
 definition file from your local bundles. To completely remove a bundle,
 including its local bundle definition file, use the following command with
@@ -487,7 +487,7 @@ Mixer performs basic validation on all bundles when used throughout the
 system.
 
 Mixer checks the validity of the bundle's syntax and name. Optionally, you can
-run this validation manually on `bundle1` with the following command:
+run this validation manually on ``bundle1`` with the following command:
 
 .. code-block:: bash
 
@@ -499,7 +499,7 @@ run this validation manually on `bundle1` with the following command:
 If you use the optional :option:`--strict` flag, the command additionally
 checks if the rest of the bundle header fields can be parsed, if the bundle
 header fields are non-empty, and if the bundle header ``Title`` field and
-the bundle filename match. Perform a strict validation of `bundle1` with the
+the bundle filename match. Perform a strict validation of ``bundle1`` with the
 following command:
 
 .. code-block:: bash
@@ -543,7 +543,7 @@ If the mix has many bundles, this step might take some time.
 By default, mixer uses the legacy chroot-builder. In this mode, mixer
 automatically gathers the bundle definition files for the bundles in the mix
 into a :file:`mix-bundles` directory. The directory's path is set in the
-`BUNDLE_DIR` variable in the :file:`builder.conf`. **Do not edit these
+``BUNDLE_DIR`` variable in the :file:`builder.conf`. **Do not edit these
 files.** Mixer automatically deletes the contents of the :file:`mix-bundles`
 directory before repopulating the directory on-the-fly as mixer builds the
 chroots.
@@ -571,20 +571,20 @@ Create an update with the following command:
 
 When the build completes, you can find the mix update content under
 :file:`/home/clr/mix/update/www/VER`. In our example, the update content is
-found in :file:`/home/clr/mix/update/www/{<MIXVERSION>}`. `<MIXVERSION>`
+found in :file:`/home/clr/mix/update/www/{<MIXVERSION>}`. ``<MIXVERSION>``
 is the defined mix version, which is 10 by default.
 
-By default, mixer uses the legacy `swupd-server` to generate the update
+By default, mixer uses the legacy ``swupd-server`` to generate the update
 content. However, we have built a new implementation into the mixer tool
 itself. While this is currently an experimental feature, you should use the
-new `swupd-server`. To use the the new `swupd-server`, use the following
+new ``swupd-server``. To use the the new ``swupd-server``, use the following
 command with the :option:`--new-swupd` flag:
 
 .. code-block:: bash
 
    sudo mixer build update --new-swupd
 
-We will soon deprecate the legacy `swupd-server`. When we do, mixer will use
+We will soon deprecate the legacy ``swupd-server``. When we do, mixer will use
 the new version automatically.
 
 Mixer creates all the content needed to make a fully usable mix with this
@@ -600,7 +600,7 @@ mix version to another, with the following command:
    sudo mixer-pack-maker.sh --to <MIX_VERSION> --from <PAST_VERSION> -S /home/clr/mix/update
 
 The pack-maker generates all delta packs for the bundles changed from
-`PAST_VERSION` to `MIX_VERSION`. If your `STATE_DIR` is in a different
+``PAST_VERSION`` to ``MIX_VERSION``. If your ``STATE_DIR`` is in a different
 location, specify the location with the :option:`-S` flag. Mixer cannot
 create delta packs for the first build because the update is from version 0.
 Version 0 implicitly has no content. Thus, mixer can generate no deltas.
@@ -611,14 +611,14 @@ delta content between them, for example: 10 to 20.
 Create an image
 *****************
 
-Since mixer uses the `ister` tool to create a bootable image from your
-updated content, we must first configure the `ister` tool. To configure the
-image `ister` creates, we need the `ister` configuration file. Obtain a copy
-with the default values from the `ister` package with the following command:
+Since mixer uses the ``ister`` tool to create a bootable image from your
+updated content, we must first configure the ``ister`` tool. To configure the
+image ``ister`` creates, we need the ``ister`` configuration file. Obtain a copy
+with the default values from the ``ister`` package with the following command:
 
 .. code-block:: bash
 
-   sudo cp /usr/share/defaults/ister/ister.json relase-image-config.json
+   sudo cp /usr/share/defaults/ister/ister.json release-image-config.json
 
 For reference, you can inspect the `Clear Linux ister configuration file`_
 used for releases.
@@ -638,12 +638,12 @@ smaller image size. For the minimal base image, the list is:
 
    "Bundles": ["os-core", "os-core-update", "kernel-native"]
 
-Next, set the `Version` field to the mix version that you want the content
-mixer to use to build the image. `ister` allows you to build an image from
+Next, set the ``Version`` field to the mix version that you want the content
+mixer to use to build the image. ``ister`` allows you to build an image from
 any mix version that you have built, not just from the current version. In
-our example so far, `Version` is set to 10.
+our example so far, ``Version`` is set to 10.
 
-With the `ister` tool configured, build the image with the following command:
+With the ``ister`` tool configured, build the image with the following command:
 
 .. code-block:: bash
 
@@ -657,7 +657,7 @@ you can freely choose the filename. To use a different name, simply pass the
 
    sudo mixer build image --format 1 --template path/to/file.config
 
-By default, `ister` uses the format version of the build machine it runs on.
+By default, ``ister`` uses the format version of the build machine it runs on.
 Therefore, if the format you are building differs from the format of the |CL|
 OS you are building on, you must use the :option:`--format <FORMAT_NUMBER>`
 flag. Find the current format version of your OS with the following command:
@@ -706,7 +706,7 @@ update the upstream version of |CL| used as a base for the mix:
 
    mixer versions update --upstream-version 21070
 
-This command also accepts the keyword "latest":
+This command also accepts the keyword :option:`latest`:
 
 .. code-block:: bash
 
@@ -746,17 +746,17 @@ modifications as needed, for example:
 
    .. code-block:: bash
 
-      sudo mixer-pack-maker.sh --to <NEWVERSION> --from <PREV_VERSION> -S /home/clr/mix/update
+      sudo mixer-pack-maker.sh --to <NEW_VERSION> --from <PREV_VERSION> -S /home/clr/mix/update
 
 .. _mixer-format:
 
 Format version
 **************
 
-The `Format` variable set in the :file:`builder.conf` file can be more
+The ``Format`` variable set in the :file:`builder.conf` file can be more
 precisely referred to as an OS *compatibility epoch*. Versions of the OS
 within a given epoch are fully compatible and can update to any other
-version within that epoch. Across the `Format` boundary, the OS has changed
+version within that epoch. Across the ``Format`` boundary, the OS has changed
 in such a way that updating from build M in format X, to build N in format Y
 will not work. Generally, this scenario occurs when the software updater or
 software manifests change in a way that they are no longer compatible with
